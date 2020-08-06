@@ -8,14 +8,6 @@ mongoose.connect(dbURI, {
     useUnifiedTopology: true
 });
 mongoose.set('useCreateIndex', true);
-// const dbURI = 'mongodb://localhost/Loc8r';
-// mongoose.connect(dbURI,{
-//     useCreateIndex:true,
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true}).then(()=> {
-//     console.log('Database Successfully Connected')},error =>{
-//     console.log(error)
-//     });
 
 mongoose.connection.on('connected', () => {
     console.log(`Mongoose connected to ${dbURI}`);
@@ -28,7 +20,7 @@ mongoose.connection.on('disconnected', () => {
 });
 
 const gracefulShutdown = (msg, callback) => {
-    mongoose.connection.close( () => {
+    mongoose.connection.close(() => {
         console.log(`Mongoose disconnected through ${msg}`);
         callback();
     });
@@ -53,15 +45,16 @@ process.on('SIGTERM', () => {
     });
 });
 
-const readLine = require ('readline');
-if (process.platform === 'win32'){
-    const rl = readLine.createInterface ({
+const readLine = require('readline');
+if (process.platform === 'win32') {
+    const rl = readLine.createInterface({
         input: process.stdin,
         output: process.stdout
     });
-    rl.on ('SIGINT', () => {
-        process.emit ("SIGINT");
+    rl.on('SIGINT', () => {
+        process.emit("SIGINT");
     });
 }
 
 require('./locations');
+require('./users');
